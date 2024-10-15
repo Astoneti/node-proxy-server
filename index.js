@@ -1,8 +1,11 @@
+const express = require('express');
 const axios = require('axios');
 const https = require('https');
 const dotenv = require('dotenv');
 
 dotenv.config();
+const app = express();
+const PORT = 4000;
 
 const apiKey = process.env.NASA_API_KEY;
 const startDate = '2024-10-07';
@@ -17,10 +20,22 @@ const agent = new https.Agent({
 async function fetchAsteroidData() {
   try {
     const response = await axios.get(nasaApiUrl, { httpsAgent: agent });
-    console.log('Response from NASA API:', response.data);
+    return response.data;
   } catch (er) {
     console.error('Error fetching data from NASA API:', er.message);
+    throw new Error('Failed to fetch data from NASA API');
   }
 }
 
-fetchAsteroidData();
+app.get('/meteors', async (req, res) => {
+  try {
+    const data = await fetchAsteroidData();
+    res.json(data);
+  } catch (er) {
+    res.status(500).json({ er: 'Unable to fetch data from NASA API' });
+  }
+});
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
