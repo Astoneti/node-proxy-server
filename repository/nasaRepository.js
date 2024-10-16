@@ -1,18 +1,21 @@
 const axios = require('axios');
 const https = require('https');
-const { nasaApiUrl } = require('../config');
+const config = require('../config');
+const Exception = require('../exception/exception');
 
 const agent = new https.Agent({
   rejectUnauthorized: false,
 });
 
 async function fetchMeteorData() {
+  const url = `${config.nasaApiUrl}/neo/rest/v1/feed?start_date=${config.startDate}&end_date=${config.endDate}&api_key=${config.apiKey}`;
+
   try {
-    const response = await axios.get(nasaApiUrl, { httpsAgent: agent });
-    return response.data;
+    const response = await axios.get(url, { httpsAgent: agent });
+    return response.data.near_earth_objects;
   } catch (err) {
     console.error('Error fetching data from NASA API:', err.message);
-    throw new Error('Failed to fetch data from NASA API');
+    throw new Exception(500, 'Failed to fetch data from NASA API');
   }
 }
 

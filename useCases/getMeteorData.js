@@ -3,9 +3,7 @@ const mapMeteorData = require('../helpers/mapMeteorData');
 
 async function getMeteorData() {
   const data = await fetchMeteorData();
-  return mapMeteorData(data.near_earth_objects);
+  return mapMeteorData(data);
 }
 
-module.exports = {
-  getMeteorData,
-};
+module.exports = getMeteorData;
