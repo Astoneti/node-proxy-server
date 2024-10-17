@@ -1,15 +1,19 @@
-const express = require('express');
-const getMeteorData = require('../useCases/getMeteorData');
+const express = require('express')
+const fetchMeteor = require('../useCases/fetchMeteorData')
+const Exception = require('../exception/exception')
 
-const router = express.Router();
+const meteorRouter = express.Router()
 
-router.get('/', async (req, res, next) => {
+meteorRouter.get('/', async (req, res, next) => {
   try {
-    const data = await getMeteorData();
-    res.json(data);
+    const { date, count, wereDangerousMeteors } = req.query
+
+    const meteorData = await fetchMeteor(date, count, wereDangerousMeteors);
+  
+    res.json(meteorData)
   } catch (err) {
-    next(err);
+    next(new Exception(err.code || 500, err.message || 'An error occurred'))
   }
 });
 
-module.exports = router;
+module.exports = meteorRouter
