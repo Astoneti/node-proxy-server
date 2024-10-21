@@ -38,14 +38,14 @@ const getDiameter = (diameter) => {
 
 export function filterMeteors(meteors, count, wereDangerousMeteors) {
   if (wereDangerousMeteors != null) {
-    const isWereDangerousMeteors = wereDangerousMeteors; // No need to convert again
-    meteors = meteors.filter(meteor => 
-      meteor.is_potentially_hazardous_asteroid === isWereDangerousMeteors
-    );
+    const isDangerousMeteors = wereDangerousMeteors === "true";
+    meteors = meteors.filter(
+      (meteor) =>
+        meteor.is_potentially_hazardous_asteroid === isDangerousMeteors
+    )
   }
-
-  if (count != null && !isNaN(count) && count > 0) {
-    meteors = meteors.slice(0, count); // Limit the number of meteors returned
+  if (count && !isNaN(count) && count > 0) {
+    meteors = meteors.slice(0, parseInt(count))
   }
 
   return meteors;
@@ -53,19 +53,26 @@ export function filterMeteors(meteors, count, wereDangerousMeteors) {
 
 
 export function getStartAndEndDates(date) {
-  const givenDate = date ? new Date(date) : new Date()
-  const dayOfWeek = givenDate.getDay()
-  
-  const startDate = new Date(givenDate)
-  startDate.setDate(givenDate.getDate() - (dayOfWeek === 0 ? 6 : dayOfWeek - 1))
-  
-  const endDate = new Date(startDate)
-  endDate.setDate(startDate.getDate() + 4)
+  let startDate, endDate;
+
+  if (Array.isArray(date) && date.length === 2) {
+    startDate = new Date(date[0])
+    endDate = new Date(date[1])
+  } else {
+    const givenDate = date ? new Date(date) : new Date()
+    const dayOfWeek = givenDate.getDay()
+
+    startDate = new Date(givenDate)
+    startDate.setDate(givenDate.getDate() - (dayOfWeek === 0 ? 6 : dayOfWeek - 1))
+
+    endDate = new Date(startDate);
+    endDate.setDate(startDate.getDate() + 4)
+  }
 
   return {
     startDate: formatDate(startDate),
     endDate: formatDate(endDate),
-  }
+  };
 }
 
 function formatDate(date) {
