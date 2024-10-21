@@ -1,9 +1,9 @@
 const express = require('express')
 const fetchMeteor = require('../services/meteor-service')
 
-const router = express.Router()
+const meteorRouter = express.Router()
 
-router.get('/', async (req, res, next) => {
+meteorRouter.get('/', async (req, res, next) => {
   try {
     const { date, count, wereDangerousMeteors } = req.query
     const meteorData = await fetchMeteor(
@@ -17,4 +17,4 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-module.exports = router
+module.exports = meteorRouter

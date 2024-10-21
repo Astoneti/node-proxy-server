@@ -2,14 +2,14 @@ export function mapMeteorData(data) {
   return Object.values(data).flatMap((meteors) =>
     meteors.map((item) => {
       const { relative_velocity, close_approach_date_full } =
-        extractCloseApproachData(item.close_approach_data)
+        extractCloseApproachData(item.close_approach_data || [])
 
       return {
         id: item.id,
         name: item.name,
-        diameter: getDiameter(item.estimated_diameter),
+        diameter: getDiameter(item.estimated_diameter || {}),
         is_potentially_hazardous_asteroid:
-          item.is_potentially_hazardous_asteroid,
+          !!item.is_potentially_hazardous_asteroid,
         close_approach_date_full,
         relative_velocity,
       }
@@ -30,27 +30,28 @@ const extractCloseApproachData = (closeApproachData) => {
 }
 
 const getDiameter = (diameter) => {
-  return (
-    (diameter.meters.estimated_diameter_min +
-      diameter.meters.estimated_diameter_max) / 2
-  )
-}
+  if (!diameter?.meters) return null;
+  const { estimated_diameter_min, estimated_diameter_max } = diameter.meters;
+
+  return (estimated_diameter_min + estimated_diameter_max) / 2 || null;
+};
+
 
 export function filterMeteors(meteors, count, wereDangerousMeteors) {
   if (wereDangerousMeteors != null) {
     const isDangerousMeteors = wereDangerousMeteors === "true";
     meteors = meteors.filter(
-      (meteor) =>
-        meteor.is_potentially_hazardous_asteroid === isDangerousMeteors
-    )
+      (meteor) => meteor.is_potentially_hazardous_asteroid === isDangerousMeteors
+    );
   }
-  if (count && !isNaN(count) && count > 0) {
-    meteors = meteors.slice(0, parseInt(count))
+
+  const parsedCount = parseInt(count, 10);
+  if (!isNaN(parsedCount) && parsedCount > 0) {
+    meteors = meteors.slice(0, parsedCount);
   }
 
   return meteors;
 }
-
 
 export function getStartAndEndDates(date) {
   let startDate, endDate;
