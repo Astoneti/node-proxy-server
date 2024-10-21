@@ -1,5 +1,5 @@
 const express = require('express')
-const fetchMeteor = require('../useCases/fetchMeteorData')
+const fetchMeteor = require('../services/meteor-service')
 
 const meteorRouter = express.Router()
 

@@ -1,7 +1,7 @@
 const express = require('express')
-const config = require('./config')
-const meteorRoutes = require('./delivery/meteorRoutes')
-const errorHandler = require('./exception/error_middleware')
+const config = require('./app/config/config')
+const meteorRoutes = require('./app/controllers/meteor-controller')
+const errorHandler = require('./app/utils/error-handler')
 
 const app = express()
 

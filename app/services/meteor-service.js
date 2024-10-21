@@ -1,4 +1,4 @@
-const { getMeteorData } = require('../repository/meteorRepository')
+const { getMeteorData } = require('../repository/meteor-repository')
 const { mapMeteorData, filterMeteors } = require('../helpers/meteorHelper')
 
 const fetchMeteor = async (date, count, wereDangerousMeteors) => {

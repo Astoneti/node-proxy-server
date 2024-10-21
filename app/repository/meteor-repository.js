@@ -1,5 +1,5 @@
 const axios = require('axios')
-const config = require('../config')
+const config = require('../config/config')
 const https = require('https')
 const { getStartAndEndDates } = require('../helpers/meteorHelper')
 
