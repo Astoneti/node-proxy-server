@@ -31,10 +31,10 @@ const extractCloseApproachData = (closeApproachData) => {
 
 const getDiameter = (diameter) => {
   if (!diameter?.meters) return null;
-  const { estimated_diameter_min, estimated_diameter_max } = diameter.meters;
+  const { estimated_diameter_min, estimated_diameter_max } = diameter.meters
 
-  return (estimated_diameter_min + estimated_diameter_max) / 2 || null;
-};
+  return (estimated_diameter_min + estimated_diameter_max) / 2 || null
+}
 
 
 export function filterMeteors(meteors, count, wereDangerousMeteors) {
@@ -42,12 +42,12 @@ export function filterMeteors(meteors, count, wereDangerousMeteors) {
     const isDangerousMeteors = wereDangerousMeteors === "true";
     meteors = meteors.filter(
       (meteor) => meteor.is_potentially_hazardous_asteroid === isDangerousMeteors
-    );
+    )
   }
 
   const parsedCount = parseInt(count, 10);
   if (!isNaN(parsedCount) && parsedCount > 0) {
-    meteors = meteors.slice(0, parsedCount);
+    meteors = meteors.slice(0, parsedCount)
   }
 
   return meteors;
@@ -73,7 +73,7 @@ export function getStartAndEndDates(date) {
   return {
     startDate: formatDate(startDate),
     endDate: formatDate(endDate),
-  };
+  }
 }
 
 function formatDate(date) {

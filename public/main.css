@@ -1,0 +1,54 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  h1 {
+    margin: 20px;
+    text-align: center;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 18px;
+    text-align: left;
+  }
+  
+  th, td {
+    padding: 12px;
+    border: 1px solid #ddd;
+  }
+  
+  th {
+    background-color: #f4f4f4;
+    color: #333;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  tr:hover {
+    background-color: #f1f1f1;
+  }
+  
+  .hazardous {
+    color: #d9534f; /* Red color for hazardous asteroids */
+    font-weight: bold;
+  }
+  
+  .non-hazardous {
+    color: #5cb85c; /* Green color for non-hazardous asteroids */
+    font-weight: bold;
+  }
+  
+  .table-title {
+    margin: 10px 0;
+    font-size: 24px;
+    color: #007bff; /* Blue color for title */
+    text-align: center;
+  }
+  
