@@ -1,12 +1,15 @@
 const express = require('express')
-const fetchMeteor = require('../services/meteor-service')
+const getMeteor = require('../services/meteor-service')
+const getImage = require('../services/rover-service')
 
-const router = express.Router()
+const meteorRouter = express.Router()
 
-router.get('/', async (req, res, next) => {
+meteorRouter.get(
+  '/', 
+  async (req, res, next) => {
   try {
     const { date, count, wereDangerousMeteors } = req.query
-    const meteorData = await fetchMeteor(
+    const meteorData = await getMeteor(
       date,
       count, 
       wereDangerousMeteors
@@ -17,4 +20,17 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-module.exports = router
+meteorRouter.post(
+  "/image",
+  async (request, response, next) => {
+    try {
+      const { userId, userName, userApiKey } = request.body
+      const image = await getImage(userApiKey)
+      return response.json({ userId, userName, image })
+    } catch (error) {
+      next(error)
+    }
+  }
+)
+
+module.exports = meteorRouter

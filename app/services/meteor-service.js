@@ -1,13 +1,13 @@
 const { getMeteorData } = require('../repository/meteor-repository')
-const { mapMeteorData, filterMeteors } = require('../helpers/meteorHelper')
+const { mapMeteorData, filterMeteors } = require('../helpers/meteor-helper')
 
-const fetchMeteor = async (date, count, wereDangerousMeteors) => {
-  let meteorsData = await getMeteorData(date);
-  let mappedMeteors = await mapMeteorData(meteorsData)
+const getMeteor = async (date, count, wereDangerousMeteors) => {
+  const meteorsData = await getMeteorData(date);
+  const mappedMeteors = mapMeteorData(meteorsData)
 
-  let filteredMeteors = await filterMeteors(mappedMeteors, count, wereDangerousMeteors)
+  const filteredMeteors = await filterMeteors(mappedMeteors, count, wereDangerousMeteors)
 
   return filteredMeteors
 }
 
-module.exports = fetchMeteor
+module.exports = getMeteor
