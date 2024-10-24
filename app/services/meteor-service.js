@@ -2,10 +2,10 @@ const { getMeteorData } = require('../repository/meteor-repository')
 const { mapMeteorData, filterMeteors } = require('../helpers/meteor-helper')
 
 const getMeteor = async (date, count, wereDangerousMeteors) => {
-  let meteorsData = await getMeteorData(date);
-  let mappedMeteors = mapMeteorData(meteorsData)
+  const meteorsData = await getMeteorData(date);
+  const mappedMeteors = mapMeteorData(meteorsData)
 
-  let filteredMeteors = await filterMeteors(mappedMeteors, count, wereDangerousMeteors)
+  const filteredMeteors = await filterMeteors(mappedMeteors, count, wereDangerousMeteors)
 
   return filteredMeteors
 }
